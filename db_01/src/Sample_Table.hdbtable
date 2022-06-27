@@ -1,0 +1,5 @@
+COLUMN TABLE "Sample_Table" (
+    "ID" INTEGER NOT NULL,
+    "NAME" NVARCHAR(10)
+
+);

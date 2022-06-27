@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="Exam_rank02" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="true">
+<descriptions defaultDescription="Exam_rank02"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="Exam_table02">
+    <resourceUri>Exam_table02</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:RankView" id="Rank_1">
+    <viewAttributes>
+      <viewAttribute id="race_ethnicity"/>
+      <viewAttribute id="gender"/>
+      <viewAttribute id="Sum" aggregationType="sum"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Aggregation_1"/>
+    <rankingFilter type="RANK" offset="0" offsetReference="FRONT" dynamicPartitionAttributes="false">
+      <partitionViewAttributeName id="race_ethnicity"/>
+      <order byViewAttributeName="Sum" direction="DESC"/>
+      <rankThreshold>
+        <value>3</value>
+      </rankThreshold>
+      <rankViewAttributeName>Rank_Column</rankViewAttributeName>
+    </rankingFilter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:AggregationView" id="Aggregation_1">
+    <viewAttributes>
+      <viewAttribute id="race_ethnicity"/>
+      <viewAttribute id="gender"/>
+    
+      <viewAttribute id="math_score" aggregationType="sum"/>
+      <viewAttribute id="reading_score" aggregationType="sum"/>
+      <viewAttribute id="writing_score" aggregationType="sum"/></viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="Sum" datatype="INTEGER" expressionLanguage="SQL">
+        <formula>&quot;math_score&quot;+&quot;reading_score&quot;+&quot;writing_score&quot;</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <restrictedViewAttributes/>
+    <input node="Exam_table02">
+      <mapping xsi:type="Calculation:AttributeMapping" target="race_ethnicity" source="race/ethnicity"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="math_score" source="math score"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="reading_score" source="reading score"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="writing_score" source="writing score"/>
+    </input>
+  </calculationView>
+</calculationViews>
+
+<logicalModel id="Rank_1">
+  <attributes>
+    <attribute id="race_ethnicity" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="race_ethnicity"/>
+      <keyMapping columnObjectName="Rank_1" columnName="race_ethnicity"/>
+    </attribute>
+    <attribute id="gender" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="gender"/>
+      <keyMapping columnObjectName="Rank_1" columnName="gender"/>
+    </attribute>
+    <attribute id="Rank_Column" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Rank_Column"/>
+      <keyMapping columnObjectName="Rank_1" columnName="Rank_Column"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+    <measure id="Sum" order="3" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Sum"/>
+      <measureMapping columnObjectName="Rank_1" columnName="Sum"/>
+    </measure>
+  </baseMeasures>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+  <localDimensions/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="100" y="105"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Rank_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="90" y="231"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Aggregation_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="80" y="373"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

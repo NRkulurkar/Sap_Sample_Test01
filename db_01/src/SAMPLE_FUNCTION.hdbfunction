@@ -1,0 +1,22 @@
+FUNCTION "SAMPLE_FUNCTION"(IN X INT )
+    RETURNS TABLE (
+        "Stud_id" INTEGER,
+        "firstname" NVARCHAR(20),
+        "sub_name" NVARCHAR(20),
+        "marks" INTEGER,
+        "Total_marks" INTEGER  )
+    LANGUAGE SQLSCRIPT
+    SQL SECURITY INVOKER AS
+BEGIN
+    /*****************************
+        Write your function logic
+    ****************************/
+        TABLE_OUT = select t1."Stud_id", t1."firstname", t2."sub_name", t1."marks", t3."Total_marks"
+        from "Sample_Stud" t1 
+        inner join "Sample_Sub" t2
+        on t1."sub_id"=t2."sub_id"
+        inner join "Sample_Exam" t3
+        on t2."exam_id"=t3."exam_id"
+      Where t1."Stud_id" = X;
+    RETURN:TABLE_OUT;
+END;

@@ -1,0 +1,19 @@
+COLUMN TABLE "Edu-data02" (
+    "gender" NVARCHAR(5),
+    "NationalITy" NVARCHAR(30),
+    "PlaceofBirth" NVARCHAR(40),
+    "StageID" NVARCHAR(40),
+    "GradeID" NVARCHAR(20),
+    "SectionID" NVARCHAR(10),
+    "Topic" NVARCHAR(50),
+    "Semester" NVARCHAR(10),
+    "Relation" NVARCHAR(20),
+    "raisedhands" INTEGER,
+    "VisITedResources" INTEGER,
+    "AnnouncementsView" INTEGER,
+    "Discussion" INTEGER,
+    "ParentAnsweringSurvey" NVARCHAR(10),
+    "ParentschoolSatisfaction" NVARCHAR(10),
+    "StudentAbsenceDays" NVARCHAR(20),
+    "Class" NVARCHAR(10)
+)

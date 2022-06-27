@@ -1,0 +1,9 @@
+COLUMN TABLE "Exam_table02" (
+    "gender"nvarchar(10),
+    "race/ethnicity"nvarchar(10),
+    "parental level of education"nvarchar(20),
+    "lunch" NVARCHAR(20),
+    "test preparation course" nvarchar(10),
+    "math score" INTEGER,
+    "reading score" integer,
+    "writing score" INTEGER)

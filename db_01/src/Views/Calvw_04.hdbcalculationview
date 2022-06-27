@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:AccessControl="http://www.sap.com/ndb/SQLCoreModelAccessControl.ecore" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" xmlns:Privilege="http://www.sap.com/ndb/BiModelPrivilege.ecore" id="Calvw_04" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="true">
+<descriptions defaultDescription="Calvw_04"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="Sample_Stud">
+    <resourceUri>Sample_Stud</resourceUri>
+  </DataSource>
+  <DataSource id="Sample_Exam">
+    <resourceUri>Sample_Exam</resourceUri>
+  </DataSource>
+  <DataSource id="Sample_Sub">
+    <resourceUri>Sample_Sub</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1">
+    <viewAttributes>
+      <viewAttribute id="Stud_id"/>
+      <viewAttribute id="firstname"/>
+      <viewAttribute id="marks"/>
+      <viewAttribute id="sub_id"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Sample_Stud"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_2">
+    <viewAttributes>
+      <viewAttribute id="exam_id"/>
+      <viewAttribute id="Exam_name"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Sample_Exam"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_3">
+    <viewAttributes>
+      <viewAttribute id="sub_id"/>
+      <viewAttribute id="sub_name"/>
+      <viewAttribute id="exam_id"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Sample_Sub"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_1_1" cardinality="CN_N" joinType="inner" multiJoinNode="Join_1" multiJoinCentralTable="Projection_1" multiJoinOrder="Outside In">
+    <viewAttributes>
+      <viewAttribute id="sub_id" aggregationType="sum"/>
+      <viewAttribute id="exam_id" aggregationType="sum"/>
+      <viewAttribute id="sub_name"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Projection_2">
+      <mapping xsi:type="Calculation:AttributeMapping" target="exam_id" source="exam_id"/>
+    </input>
+    <input node="Projection_3">
+      <mapping xsi:type="Calculation:AttributeMapping" target="sub_id" source="sub_id"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="sub_name" source="sub_name"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="exam_id" source="exam_id"/>
+    </input>
+    <joinAttribute name="exam_id"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_1_2" cardinality="CN_N" joinType="inner" multiJoinNode="Join_1" multiJoinCentralTable="Projection_1" multiJoinOrder="Outside In">
+    <viewAttributes>
+      <viewAttribute id="sub_id" aggregationType="sum"/>
+      <viewAttribute id="exam_id" aggregationType="sum"/>
+      <viewAttribute id="sub_name"/>
+      <viewAttribute id="Stud_id" aggregationType="sum"/>
+      <viewAttribute id="firstname"/>
+      <viewAttribute id="marks" aggregationType="sum"/>
+      <viewAttribute hidden="true" id="JOIN$sub_id$sub_id"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Projection_1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="Stud_id" source="Stud_id"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="firstname" source="firstname"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="marks" source="marks"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$sub_id$sub_id" source="sub_id"/>
+    </input>
+    <input node="Join_1_1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="sub_id" source="sub_id"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="exam_id" source="exam_id"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="sub_name" source="sub_name"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$sub_id$sub_id" source="sub_id"/>
+    </input>
+    <joinAttribute name="JOIN$sub_id$sub_id"/>
+  </calculationView>
+</calculationViews>
+
+<logicalModel id="Join_1_2">
+  <attributes>
+    <attribute id="Stud_id" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Stud_id"/>
+      <keyMapping columnObjectName="Join_1_2" columnName="Stud_id"/>
+    </attribute>
+    <attribute id="firstname" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="firstname"/>
+      <keyMapping columnObjectName="Join_1_2" columnName="firstname"/>
+    </attribute>
+    <attribute id="sub_name" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="sub_name"/>
+      <keyMapping columnObjectName="Join_1_2" columnName="sub_name"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+    <measure id="marks" order="3" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="marks"/>
+      <measureMapping columnObjectName="Join_1_2" columnName="marks"/>
+    </measure>
+  </baseMeasures>
+  <calculatedMeasures/>
+  <restrictedMeasures>
+    <measure id="Res_nav" order="5" aggregationType="sum" datatype="INTEGER" length="10" scale="0" baseMeasure="marks">
+      <descriptions defaultDescription="result"/>
+      <restriction logicalOperator="AND">
+        <filter xsi:type="Privilege:AttributeFilter" attributeName="firstname">
+          <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="Nav"/>
+        </filter>
+        <attributeName>firstname</attributeName>
+      </restriction>
+      <restriction logicalOperator="AND">
+        <filter xsi:type="Privilege:AttributeFilter" attributeName="firstname">
+          <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="Anu"/>
+        </filter>
+        <attributeName>firstname</attributeName>
+      </restriction>
+    </measure>
+  </restrictedMeasures>
+  <localDimensions/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="100" y="105"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+    
+  
+    <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="-142" y="296"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Projection_2" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="121" y="313"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Projection_3" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="362" y="298"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="91" y="164"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Projection_1" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput" multiJoinViewNodeName="Join_1">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="136"/>
+    </shape>
+    <shape modelObjectName="Projection_2" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput" multiJoinViewNodeName="Join_1">
+      <upperLeftCorner x="232" y="176"/>
+      <rectangleSize width="147"/>
+    </shape>
+    <shape modelObjectName="Projection_3" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput" multiJoinViewNodeName="Join_1">
+      <upperLeftCorner x="392" y="14"/>
+      <rectangleSize width="137"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

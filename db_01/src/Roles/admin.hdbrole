@@ -1,0 +1,15 @@
+{
+  "role": {
+    "name": "admin#",
+    "schema_privileges": [
+      {
+        "privileges_with_grant_option": [
+          "DELETE",
+          "INSERT",
+          "SELECT",
+          "EXECUTE"
+        ]
+      }
+    ]
+  }
+} 

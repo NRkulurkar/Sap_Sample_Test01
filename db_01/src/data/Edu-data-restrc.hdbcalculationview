@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:AccessControl="http://www.sap.com/ndb/SQLCoreModelAccessControl.ecore" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" xmlns:Privilege="http://www.sap.com/ndb/BiModelPrivilege.ecore" id="Edu-data-restrc" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" hierarchyGeneration="SQL" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="Edu-data-restrc.hdbcalculationview"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="Edu-data02">
+    <resourceUri>Edu-data02</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1">
+    <viewAttributes>
+      <viewAttribute id="gender"/>
+      <viewAttribute id="StageID"/>
+      <viewAttribute id="GradeID"/>
+      <viewAttribute id="SectionID"/>
+      <viewAttribute id="raisedhands"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Edu-data02"/>
+  </calculationView>
+</calculationViews>
+<logicalModel id="Projection_1">
+  <attributes>
+    <attribute id="gender" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="gender"/>
+      <keyMapping columnObjectName="Projection_1" columnName="gender"/>
+    </attribute>
+    <attribute id="StageID" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="StageID"/>
+      <keyMapping columnObjectName="Projection_1" columnName="StageID"/>
+    </attribute>
+    <attribute id="GradeID" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GradeID"/>
+      <keyMapping columnObjectName="Projection_1" columnName="GradeID"/>
+    </attribute>
+    <attribute id="SectionID" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SectionID"/>
+      <keyMapping columnObjectName="Projection_1" columnName="SectionID"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+    <measure id="raisedhands" order="6" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="raisedhands"/>
+      <measureMapping columnObjectName="Projection_1" columnName="raisedhands"/>
+    </measure>
+  </baseMeasures>
+  <calculatedMeasures/>
+  <restrictedMeasures>
+    <measure id="Born_in_us" order="5" aggregationType="sum" datatype="INTEGER" length="" scale="0" baseMeasure="raisedhands">
+      <descriptions defaultDescription="usa born"/>
+      <restriction logicalOperator="AND">
+        <filter xsi:type="Privilege:AttributeFilter" attributeName="StageID">
+          <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value=""/>
+        </filter>
+        <attributeName>StageID</attributeName>
+      </restriction>
+      </measure>
+  </restrictedMeasures>
+  <localDimensions/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="100" y="232"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

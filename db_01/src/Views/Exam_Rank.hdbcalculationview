@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="Exam_Rank" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="true">
+<descriptions defaultDescription="Exam_Rank"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="Edu-data02">
+    <resourceUri>Edu-data02</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1">
+    <viewAttributes>
+      <viewAttribute id="NationalITy"/>
+      <viewAttribute id="PlaceofBirth"/>
+      <viewAttribute id="SectionID"/>
+      <viewAttribute id="Topic"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Edu-data02"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:RankView" id="Rank_1" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="NationalITy"/>
+      <viewAttribute id="PlaceofBirth"/>
+      <viewAttribute id="SectionID"/>
+      <viewAttribute id="Topic"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Projection_1"/>
+    <rankingFilter type="RANK" offset="0" offsetReference="FRONT" dynamicPartitionAttributes="false">
+      <partitionViewAttributeName id="NationalITy"/>
+      <order byViewAttributeName="SectionID" direction="ASC"/>
+      <rankThreshold>
+        <value>3</value>
+      </rankThreshold>
+      <rankViewAttributeName>Rank_Column</rankViewAttributeName>
+    </rankingFilter>
+  </calculationView>
+</calculationViews>
+
+<logicalModel id="Rank_1">
+  <attributes>
+    <attribute id="NationalITy" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="NationalITy"/>
+      <keyMapping columnObjectName="Rank_1" columnName="NationalITy"/>
+    </attribute>
+    <attribute id="PlaceofBirth" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PlaceofBirth"/>
+      <keyMapping columnObjectName="Rank_1" columnName="PlaceofBirth"/>
+    </attribute>
+    <attribute id="SectionID" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SectionID"/>
+      <keyMapping columnObjectName="Rank_1" columnName="SectionID"/>
+    </attribute>
+    <attribute id="Topic" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Topic"/>
+      <keyMapping columnObjectName="Rank_1" columnName="Topic"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+    <measure id="Rank_Column" order="1" aggregationType="sum" engineAggregation="none" measureType="simple">
+      <descriptions defaultDescription="Rank_Column"/>
+      <measureMapping columnObjectName="Rank_1" columnName="Rank_Column"/>
+    </measure>
+  </baseMeasures>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+  <localDimensions/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+    
+  
+    <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="130" y="379"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Rank_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="100" y="194"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

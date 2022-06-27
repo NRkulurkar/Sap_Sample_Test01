@@ -1,0 +1,1 @@
+COLUMN TABLE "Sample_Exam" ("exam_id"integer primary key,"Exam_name"nvarchar(10),"pass_no"integer,"fail_no"integer, "Total_marks"integer);

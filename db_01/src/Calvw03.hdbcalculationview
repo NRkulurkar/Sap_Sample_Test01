@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="Calvw03" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" hierarchyGeneration="SQL" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="Calvw03.hdbcalculationview"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="Studentdetails01">
+    <resourceUri>Studentdetails01</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:RankView" id="Rank_1">
+    <viewAttributes>
+      <viewAttribute id="firstname"/>
+      <viewAttribute id="marks" aggregationType="sum"/>
+      <viewAttribute id="sub_name"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Studentdetails01"/>
+    <rankingFilter type="RANK" offset="0" offsetReference="FRONT" dynamicPartitionAttributes="false">
+      <partitionViewAttributeName id="sub_name"/>
+      <order byViewAttributeName="marks" direction="DESC"/>
+      <rankThreshold>
+        <value>2</value>
+      </rankThreshold>
+      <rankViewAttributeName>Rank_Column</rankViewAttributeName>
+    </rankingFilter>
+  </calculationView>
+</calculationViews>
+<logicalModel id="Rank_1">
+  <attributes>
+    <attribute id="firstname" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="firstname"/>
+      <keyMapping columnObjectName="Rank_1" columnName="firstname"/>
+    </attribute>
+    <attribute id="sub_name" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="sub_name"/>
+      <keyMapping columnObjectName="Rank_1" columnName="sub_name"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+    <measure id="marks" order="2" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="marks"/>
+      <measureMapping columnObjectName="Rank_1" columnName="marks"/>
+    </measure>
+    <measure id="Rank_Column" order="4" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Rank_Column"/>
+      <measureMapping columnObjectName="Rank_1" columnName="Rank_Column"/>
+    </measure>
+  </baseMeasures>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+  <localDimensions/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Rank_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="107" y="202"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

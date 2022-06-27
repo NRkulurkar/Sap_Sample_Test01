@@ -1,0 +1,1 @@
+COLUMN TABLE "Studentdetails01" ("Stud_id" integer , "firstname" nvarchar(10), "lastname" nvarchar(10),"gender" nvarchar(10),"marks"integer,"email" nvarchar(10),"sub_name" nvarchar(10));

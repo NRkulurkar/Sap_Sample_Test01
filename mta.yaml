@@ -1,0 +1,21 @@
+_schema-version: "2.1"
+ID: Sample_Test01
+version: 0.0.1
+modules:
+- name: Sample_Test-db
+  type: hdb
+  path: db_01
+  requires:
+  - name: Sample_Test01-hdiSample_Testdb-ws-2fdn6
+    properties:
+      TARGET_CONTAINER: ~{hdi-container-name}
+resources:
+- name: Sample_Test01-hdiSample_Testdb-ws-2fdn6
+  type: com.sap.xs.hdi-container
+  parameters:
+    service_name: Sample_Test01-hdiSample_Testdb-ws-2fdn6
+    config:
+      schema: Sample_test01
+      makeUniqueName: false
+  properties:
+    hdi-container-name: ${service-name}

@@ -1,0 +1,17 @@
+PROCEDURE "Sample_StudProc"( IN X integer)
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   --DEFAULT SCHEMA <default_schema_name>
+   READS SQL DATA AS
+BEGIN
+   /*************************************
+       Write your procedure logic
+   *************************************/
+   select t1."Stud_id", t1."firstname", t2."sub_name", t1."marks", t3."Total_marks"
+   from "Sample_Stud" t1 
+   inner join "Sample_Sub" t2
+   on t1."sub_id"=t2."sub_id"
+   inner join "Sample_Exam" t3
+   on t2."exam_id"=t3."exam_id"
+Where t1."Stud_id" = X;
+END
